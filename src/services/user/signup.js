@@ -7,16 +7,9 @@ const { Op } = require("sequelize");
 
 const { generateJWT } = require("../../utils/jwtHelper");
 
-const signupUser = async (
-  firstName,
-  lastName,
-  email,
-  phoneNumber,
-  password,
-  loginMethod = "password",
-) => {
+const signupUser = async (value) => {
+  const {firstName, lastName, email, phoneNumber, password, loginMethod} = value
   try {
-    // Check if user already exists
     const existingUser = await UserModel.findOne({
       where: {
         [Op.or]: [{ email: email }, { phoneNumber: phoneNumber }],
@@ -50,7 +43,7 @@ const signupUser = async (
     });
 
     // If OTP is a login method, send OTP
-    if (loginMethod === "otp" || loginMethod === "both") {
+    if (loginMethod === "otp") {
       await sendOTPViaWhatsApp(user.id, "verification");
     }
 
@@ -58,14 +51,7 @@ const signupUser = async (
       success: true,
       message: "User registered successfully",
       accessToken,
-      user: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        loginMethod: user.loginMethod,
-      },
+      user,
     };
   } catch (error) {
     throw new Error("Signup failed: " + error.message);

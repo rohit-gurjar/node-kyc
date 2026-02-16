@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { sequelize } = require('../config');
 
-const User = sequelize.define('user', {
+const User = sequelize.define('users', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -17,7 +17,7 @@ const User = sequelize.define('user', {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
     validate: {
       isEmail: true
@@ -90,7 +90,7 @@ const User = sequelize.define('user', {
     defaultValue: Sequelize.NOW
   }
 }, {
-  tableName: 'user',
+  tableName: 'users',
   timestamps: true
 });
 
