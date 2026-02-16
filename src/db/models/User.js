@@ -50,12 +50,28 @@ const User = sequelize.define('user', {
   },
   loginMethod: {
     type: Sequelize.ENUM('password', 'otp', 'both'),
-    defaultValue: 'password',
+    defaultValue: 'otp',
     comment: 'password = password required, otp = otp required, both = either password or otp'
   },
   isActive: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
+  },
+  aadharDocument: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  passportDocument: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  panDocument: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  propertyDocument: {
+    type: Sequelize.STRING,
+    allowNull: true
   },
   lastLoginAt: {
     type: Sequelize.DATE,
@@ -74,7 +90,7 @@ const User = sequelize.define('user', {
     defaultValue: Sequelize.NOW
   }
 }, {
-  tableName: 'users',
+  tableName: 'user',
   timestamps: true
 });
 
